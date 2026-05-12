@@ -30,8 +30,10 @@
                 <form action="{{ route('dashboard') }}" method="GET">
                     <div class="input-group">
                         <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        {{-- Atribut oninput dihapus agar tidak mencari otomatis saat mengetik --}}
                         <input type="text" name="search" class="form-control" placeholder="Cari nama barang..."
-                            value="{{ request('search') }}" oninput="autoSearch(this)">
+                            value="{{ request('search') }}">
+                        
                         @if(request('category'))
                             <input type="hidden" name="category" value="{{ request('category') }}">
                         @endif
@@ -44,6 +46,7 @@
                     @if(request('search'))
                         <input type="hidden" name="search" value="{{ request('search') }}">
                     @endif
+                    {{-- Dropdown tetap otomatis submit saat diganti (onchange) --}}
                     <select name="category" class="form-select" onchange="this.form.submit()">
                         <option value="">Semua kategori</option>
                         @foreach ($categories as $cat)
@@ -77,7 +80,7 @@
                                     {{ $item->category->name ?? 'Tanpa Kategori' }}
                                 </span>
                             </td>
-                            <td class="{{ $item->stock < $item->stock_min ? 'text-danger fw-bold' : '' }}">
+                            <td class="{{ $item->stock < 20 ? 'text-danger fw-bold' : '' }}">
                                 {{ $item->stock }}
                             </td>
                             <td>{{ $item->unit ?? 'pcs' }}</td>
@@ -110,7 +113,6 @@
                 Menampilkan <strong>{{ $items->firstItem() ?? 0 }}</strong> sampai <strong>{{ $items->lastItem() ?? 0 }}</strong> dari <strong>{{ $items->total() }}</strong> data barang.
             </div>
             <div>
-                {{-- Ini adalah fungsi pagination otomatis Laravel --}}
                 {{ $items->appends(request()->query())->links('pagination::bootstrap-4') }}
             </div>
         </div>

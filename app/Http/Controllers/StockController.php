@@ -36,7 +36,7 @@ class StockController extends Controller
         return view('dashboard', compact('items', 'categories', 'stokMenipis', 'stokHabis'));
     }
 
-    // BAGIAN BARANG (ITEM)
+    // Bagian barang (item)
     public function createItem()
     {
         $categories = Category::all();
@@ -96,7 +96,7 @@ class StockController extends Controller
         return redirect()->route('dashboard')->with('success', 'Barang berhasil dihapus secara permanen!');
     }
 
-    // BAGIAN KATEGORI (CATEGORY)
+    // Bagian kategori
 
     public function indexCategory()
     {
